@@ -1,0 +1,2 @@
+# script
+Lo ngentod. Tq
