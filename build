@@ -1,18 +1,34 @@
 #!bin/bash
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
 git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b gcc5-20190314 gcc
-
+curl -F chat_id="$chat_id" -F sticker="CAADAQADKQIAAnsWCAzIzpL6c5zYygI" https://api.telegram.org/bot826431581:AAFRriNDLlXyNVi9NvnH4cGC7XUPdeRkW10/sendSticker
+curl -s -X POST https://api.telegram.org/bot826431581:AAFRriNDLlXyNVi9NvnH4cGC7XUPdeRkW10/sendMessage?chat_id=$chatid -d "disable_web_page_preview=true" -d "parse_mode=html&text=<b>WinX Kernel</b> new build is up"'!'"%0AStarted on <code>$(hostname)</code>%0AFor device <b>RIVA</b> (Redmi 5A)%0Abranch <code>"$(git rev-parse --abbrev-ref HEAD)"</code>%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0ACompiler <code>$(${PWD}/gcc/bin/aarch64-linux-gnu-gcc --version | head -n 1)</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b> #untested%0A<b>Semaphore CI Build Info</b> - <a href='https://semaphoreci.com/fauzandhiyaul/android_kernel_xiaomi_msm8917'>Status</a>"
+tanggal=$(date +'%H%M-%d%m%y')
+START=$(date +"%s")
 export ARCH=arm64
-export KBUILD_BUILD_USER=FauzanD
+export KBUILD_BUILD_USER=FauzanDF
 export KBUILD_BUILD_HOST=SemaphoreCI
 export USE_CCACHE=1
 export CACHE_DIR=~/.ccache
-
+# Fin Error
+function finerr() {
+        curl -s -X POST https://api.telegram.org/bot826431581:AAFRriNDLlXyNVi9NvnH4cGC7XUPdeRkW10/sendMessage?chat_id=$chatid -d "disable_web_page_preview=true" -d "parse_mode=markdown&text=Build throw an error(s)"
+        exit 1
+}
 make -C $(pwd) O=out riva-perf_defconfig
 make -C $(pwd) CROSS_COMPILE=$(pwd)/gcc/bin/aarch64-linux-gnu- O=out -j6 -l4
-
+if ! [ -a $IMAGE ]; then
+	echo -e "Error Cok"
+	finerr
+	exit 1
+fi
 cp out/arch/arm64/boot/Image.gz-dtb AnyKernel/zImage
 cd AnyKernel
-zip -r9 WinX-Pie-GCC5-${tanggal}.zip *
+zip -r9 WinXKernel-Pie-GCC5-${tanggal}.zip *
 END=$(date +"%s")
 DIFF=$(($END - $START))
+curl -F chat_id="$chatid" -F document=@"WinXKernel-Pie-GCC5-${tanggal}.zip" -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds. | #ribba" https://api.telegram.org/bot$token/sendDocument
+cd ..
+rm -rf out
+rm -rf AnyKernel/zImage
+rm -rf AnyKernel/ChipsKernel*.zip
