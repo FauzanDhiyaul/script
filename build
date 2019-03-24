@@ -11,7 +11,6 @@ export CACHE_DIR=~/.ccache
 make -C $(pwd) O=out riva-perf_defconfig
 make -C $(pwd) CROSS_COMPILE=$(pwd)/gcc/bin/aarch64-linux-gnu- O=out -j6 -l4
 
-fi
 cp out/arch/arm64/boot/Image.gz-dtb AnyKernel/zImage
 cd AnyKernel
 zip -r9 WinX-Pie-GCC5-${tanggal}.zip *
