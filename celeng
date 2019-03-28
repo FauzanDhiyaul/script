@@ -1,6 +1,7 @@
 #!bin/bash
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
-git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b linaro8-20190216 gcc
+git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b chips-linaro gcc
+GCC="$(pwd)/gcc/bin/aarch64-chips-linux-android-"
 curl -F chat_id="-1001429218403" -F sticker="CAADBQADIwAD7bkQKyMZ6Vhta9h8Ag" https://api.telegram.org/bot826431581:AAFRriNDLlXyNVi9NvnH4cGC7XUPdeRkW10/sendSticker
 curl -s -X POST https://api.telegram.org/bot826431581:AAFRriNDLlXyNVi9NvnH4cGC7XUPdeRkW10/sendMessage?chat_id=-1001429218403 -d "disable_web_page_preview=true" -d "parse_mode=html&text=<b>WinX Kernel</b> building"'!'"%0AFor device <b>RIVA</b> (Redmi 5A)%0Abranch <code>"$(git rev-parse --abbrev-ref HEAD)"</code>%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0ACompiler <code>$(${PWD}/gcc/bin/aarch64-linux-gnu-gcc --version | head -n 1)</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b> #untested%0A<b>Semaphore CI Build Info</b> - <a href='https://fauzandhiyaul.semaphoreci.com/projects/WinXKernel'>Status</a>"
 tanggal=$(date +'%H%M-%d%m%y')
@@ -20,7 +21,7 @@ function finerr() {
 	exit 1
 }
 make -C $(pwd) O=out riva-perf_defconfig
-make -C $(pwd) CROSS_COMPILE=$(pwd)/gcc/bin/aarch64-linux-gnu- O=out -j12 -l12
+make -C $(pwd) CROSS_COMPILE=$(GCC )O=out -j16 -l16 2>&1| tee build.log
 if ! [ -a $IMAGE ]; then
 	finerr
 	exit 1
