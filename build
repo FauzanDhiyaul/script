@@ -21,7 +21,7 @@ function finerr() {
 	exit 1
 }
 make -C $(pwd) O=out riva-perf_defconfig
-make -C $(pwd) CROSS_COMPILE=$(GCC )O=out -j16 -l16 2>&1| tee build.log
+make -C $(pwd) CROSS_COMPILE=$(GCC )O=out -j6 -l8 2>&1| tee build.log
 if ! [ -a $IMAGE ]; then
 	finerr
 	exit 1
