@@ -1,6 +1,6 @@
 #!bin/bash
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
-git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b gcc9-20190329 gcc
+git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b gcc9-20190401 gcc
 git clone https://github.com/najahiiii/clang.git -b llvm9 llvm9
 GCC="$(pwd)/gcc/bin/aarch64-linux-gnu-"
 CT="$(pwd)/llvm9/bin/clang"
