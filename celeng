@@ -13,30 +13,23 @@ export KBUILD_BUILD_USER=FauzanDF
 export KBUILD_BUILD_HOST=SemaphoreCI
 export USE_CCACHE=1
 export CACHE_DIR=~/.ccache
-# Function to upload to sprunge
-function sprunge() {
-    cat build.log | curl -F 'sprunge=<-' http://sprunge.us > link
-    HASIL="$(cat link)"
-}
 # Fin Error
 function finerr() {
-        sprunge
-        curl -s -X POST https://api.telegram.org/bot826431581:AAFRriNDLlXyNVi9NvnH4cGC7XUPdeRkW10/sendMessage?chat_id=-1001429218403 -d "disable_web_page_preview=true" -d "parse_mode=html&text=Build throw an error(s) | <b>Build logs</b> <a href='${HASIL}'>here</a>"
+        curl -s -X POST https://api.telegram.org/bot826431581:AAFRriNDLlXyNVi9NvnH4cGC7XUPdeRkW10/sendMessage?chat_id=-1001429218403 -d "disable_web_page_preview=true" -d "parse_mode=html&text=Build throw an error(s)"
         exit 1
 }
 make -s -C $(pwd) O=out winx_defconfig
-make -s -C $(pwd) CC=${CT} CROSS_COMPILE=${GCC} O=out -j32 -l12 2>&1| tee build.log
+make -s -C $(pwd) CC=${CT} CROSS_COMPILE=${GCC} O=out -j32 -l12
 if ! [ -a $IMAGE ]; then
 	finerr
 	exit 1
 fi
 cp out/arch/arm64/boot/Image.gz-dtb AnyKernel/zImage
-sprunge
 cd AnyKernel
 zip -r9 WinXKernel-Pie-${tanggal}.zip *
 END=$(date +"%s")
 DIFF=$(($END - $START))
-curl -F chat_id="-1001429218403" -F document=@"WinXKernel-Pie-${tanggal}.zip" -F "disable_web_page_preview=true" -F "parse_mode=html" -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | <b>Logs</b> <a href='${HASIL}'>here</a> | #riva" https://api.telegram.org/bot826431581:AAFRriNDLlXyNVi9NvnH4cGC7XUPdeRkW10/sendDocument
+curl -F chat_id="-1001429218403" -F document=@"WinXKernel-Pie-${tanggal}.zip" -F "disable_web_page_preview=true" -F "parse_mode=html" -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | #riva" https://api.telegram.org/bot826431581:AAFRriNDLlXyNVi9NvnH4cGC7XUPdeRkW10/sendDocument
 cd ..
 rm -rf out
 rm -rf AnyKernel/zImage
