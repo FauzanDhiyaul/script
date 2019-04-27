@@ -9,8 +9,8 @@ curl -s -X POST https://api.telegram.org/bot826431581:AAFRriNDLlXyNVi9NvnH4cGC7X
 tanggal=$(date +'%H%M-%d%m%y')
 START=$(date +"%s")
 export ARCH=arm64
-export KBUILD_BUILD_USER=ZanTrash
-export KBUILD_BUILD_HOST=KernelLab
+export KBUILD_BUILD_USER=zantrash
+export KBUILD_BUILD_HOST=NusantaraDev
 export USE_CCACHE=1
 export CACHE_DIR=~/.ccache
 # Fin Error
