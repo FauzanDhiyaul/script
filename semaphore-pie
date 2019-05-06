@@ -29,7 +29,7 @@ cd AnyKernel
 zip -r9 winxkernel-pie-${tanggal}.zip *
 END=$(date +"%s")
 DIFF=$(($END - $START))
-curl -F chat_id="-1001429218403" -F document=@"winxernel-pie-${tanggal}.zip" -F "disable_web_page_preview=true" -F "parse_mode=html" -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | #riva" https://api.telegram.org/bot832348112:AAEC1kdRlhkbpVbSSE3Q26XgWjIPE7PH0zw/sendDocument
+curl -F chat_id="-1001429218403" -F document=@"winxkernel-pie-${tanggal}.zip" -F "disable_web_page_preview=true" -F "parse_mode=html" -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | #riva" https://api.telegram.org/bot832348112:AAEC1kdRlhkbpVbSSE3Q26XgWjIPE7PH0zw/sendDocument
 cd ..
 rm -rf out
 rm -rf AnyKernel/zImage
