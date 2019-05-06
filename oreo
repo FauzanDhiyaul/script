@@ -24,11 +24,11 @@ if ! [ -a $IMAGE ]; then
 fi
 cp out/arch/arm64/boot/Image.gz-dtb AnyKernel/zImage
 cd AnyKernel
-zip -r9 WinXKernel-Oreo-${tanggal}.zip *
+zip -r9 winxkernel-oreo-${tanggal}.zip *
 END=$(date +"%s")
 DIFF=$(($END - $START))
-curl -F chat_id="-1001429218403" -F document=@"WinXKernel-Oreo-${tanggal}.zip" -F "disable_web_page_preview=true" -F "parse_mode=html" -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | #riva" https://api.telegram.org/bot832348112:AAEC1kdRlhkbpVbSSE3Q26XgWjIPE7PH0zw/sendDocument
+curl -F chat_id="-1001429218403" -F document=@"winxkernel-oreo-${tanggal}.zip" -F "disable_web_page_preview=true" -F "parse_mode=html" -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | #riva" https://api.telegram.org/bot832348112:AAEC1kdRlhkbpVbSSE3Q26XgWjIPE7PH0zw/sendDocument
 cd ..
 rm -rf out
 rm -rf AnyKernel/zImage
-rm -rf AnyKernel/WinXKernel*.zip
+rm -rf AnyKernel/winxkernel*.zip
