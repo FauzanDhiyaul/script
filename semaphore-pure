@@ -2,9 +2,9 @@
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
 git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b 4.9-mirror gcc
 git clone https://github.com/najahiiii/DragonTC.git dtc
-wget http://mirrorku.me/Toolchains/GNU%20GCC/ARM/arm-linux-gnueabi-9.x-gnu-20190518.tar.xz
-tar -xf arm-linux-gnueabi-9.x-gnu-20190518.tar.xz
-GCCARM="$(pwd)/arm-linux-gnueabi/bin/arm-linux-gnueabi-"
+git clone https://github.com/RaphielGang/arm-linux-gnueabi-8.x.git gccarm
+
+GCCARM="$(pwd)/gccarm/bin/arm-linux-gnueabi-"
 GCC="$(pwd)/gcc/bin/aarch64-linux-gnu-"
 CT="$(pwd)/dtc/bin/clang"
 curl -s -F chat_id=-1001429218403 -F sticker="CAADBQADIwAD7bkQKyMZ6Vhta9h8Ag" https://api.telegram.org/bot832348112:AAEC1kdRlhkbpVbSSE3Q26XgWjIPE7PH0zw/sendSticker
