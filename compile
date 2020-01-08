@@ -1,6 +1,6 @@
 #!bin/bash
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
-GCC="~/gcc/bin/aarch64-linux-gnu-"
+GCC="$(pwd)/gcc/bin/aarch64-linux-android-"
 curl -s -F chat_id=-1001163257618 -F sticker="CAADBQADNwADoOTBMXWCfMxbi4L3FgQ" https://api.telegram.org/bot832348112:AAHwaetZW8HnIDP_bgbhOMw6BLVu6W75N1I/sendSticker
 curl -s -X POST https://api.telegram.org/bot832348112:AAHwaetZW8HnIDP_bgbhOMw6BLVu6W75N1I/sendMessage?chat_id=-1001163257618 -d "disable_web_page_preview=true" -d "parse_mode=html&text=<b>ScrapperKernel</b>%0ACompile Started"'!'"%0AFor device <b>RIVA</b> (Redmi 5A)%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0A<b>Compiler</b> <code>$(${GCC}gcc --version | head -n 1)| sed -e 's/  */ /g')</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b> #untested"
 tanggal=$(date +'%H%M-%d%m%y')
